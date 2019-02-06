@@ -14,18 +14,31 @@ services:
       - 8112:8112 # port for deluge web UI to be reachable from local network
     command: '-r 192.168.1.0/24' # route local network traffic
 
-  deluge:
-    container_name: deluge
-    image: linuxserver/deluge:latest
-    restart: always
-    network_mode: service:vpn # run on the vpn network
-    environment:
-      - PUID=1000 # default user id, for downloaded files access rights
-      - PGID=1000 # default group id, for downloaded files access rights
-      - TZ=Europe/Paris # timezone
+  delugevpn:
+    restart: unless-stopped
+    image: binhex/arch-delugevpn
+    container_name: delugevpn
     volumes:
       - /media/${USER}/data1/downloads/ongoing:/downloads # download folder
       - ${HOME}/.config/deluge:/config # config files
+    ports:
+        - "32772:58846"
+        - "32773:58946"
+        - "32770:8112"
+        - "32771:8118"
+    environment:
+        - VPN_USER=p8732447
+        - VPN_PASS=beadleJ_19
+        - VPN_PROV=pia
+        - STRICT_PORT_FORWARD=no
+        - NAME_SERVERS=209.222.18.222,37.235.1.174,1.1.1.1,8.8.8.8,209.222.18.218,37.235.1.177,1.0.0.1,8.8.4.4
+        - DEBUG=true
+        - PGID=100
+        - PUID=1008
+        - ENABLE_PRIVOXY=yes
+        - VPN_ENABLED=yes
+        - UMASK=000
+    network_mode: "bridge"
 
   jackett:
     container_name: jackett
