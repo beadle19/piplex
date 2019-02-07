@@ -3,8 +3,8 @@ services:
 
   vpn:
     container_name: vpn
-    # image: dperson/openvpn-client:latest
-    image: evolvedm/openvpn-rpi
+    image: dperson/openvpn-client:latest
+    # image: evolvedm/openvpn-rpi
     cap_add:
       - net_admin # required to modify network interfaces
     restart: unless-stopped
