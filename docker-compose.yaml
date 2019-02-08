@@ -1,45 +1,59 @@
 version: '3.4'
 services:
 
-  # vpn:
-  #   container_name: vpn
-  #   image: dperson/openvpn-client:latest
-  #   # image: kylemanna/openvpn
-  #   # image: evolvedm/openvpn-rpi
-  #   cap_add:
-  #     - net_admin # required to modify network interfaces
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /dev/net/tun:/dev/net/tun # tun device
-  #     - /media/Pi-Server/Plex/vpn:/vpn # OpenVPN configuration
-  #   ports:
-  #     - 8112:8112 # port for deluge web UI to be reachable from local network
-  #   command: '-r 192.168.1.0/24' # route local network traffic
+  vpn:
+    container_name: vpn
+    image: dperson/openvpn-client:latest
+    # image: kylemanna/openvpn
+    # image: evolvedm/openvpn-rpi
+    cap_add:
+      - net_admin # required to modify network interfaces
+    restart: unless-stopped
+    volumes:
+      - /dev/net/tun:/dev/net/tun # tun device
+      - /media/Pi-Server/Plex/vpn:/vpn # OpenVPN configuration
+    ports:
+      - 8112:8112 # port for deluge web UI to be reachable from local network
+    command: '-r 192.168.0.68/16' # route local network traffic
 
   deluge:
     container_name: deluge
     # image: linuxserver/deluge:102
-    # image: jordancrawford/rpi-deluge
-    # image: sscraggles/docker-deluge-openvpn
-    build: https://github.com/sscraggles/docker-deluge-openvpn.git
+    image: jordancrawford/rpi-deluge
     network_mode: host # run on the host network directly, web UI on port 8112
-    ports: 
-      - "9091:9091"
     environment:
       - PUID=1000 # default user id, for downloaded files access rights
       - PGID=1000 # default group id, for downloaded files access rights
       - TZ=Europe/Paris # timezone
-      - OPENVPN_PROVIDER=PIA
-      - OPENVPN_CONFIG=Netherlands
-      - OPENVPN_USERNAME=p8732447
-      - OPENVPN_PASSWORD=beadleJ_19
-      - WEBPROXY_ENABLED=false
-      - DROP_DEFAULT_ROUTE=true
-      - LOCAL_NETWORK=192.168.0.68/16
     volumes:
-      - /etc/localtime:/etc/localtime:ro # time
       - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
       - /media/Pi-Server/Plex/config/deluge:/config # config files
+
+  # deluge:
+  #   container_name: deluge
+  #   # image: linuxserver/deluge:102
+  #   # image: jordancrawford/rpi-deluge
+  #   # image: sscraggles/docker-deluge-openvpn
+  #   build: https://github.com/sscraggles/docker-deluge-openvpn.git
+  #   network_mode: host # run on the host network directly, web UI on port 8112
+  #   ports: 
+  #     - "9091:9091"
+  #   environment:
+  #     - PUID=1000 # default user id, for downloaded files access rights
+  #     - PGID=1000 # default group id, for downloaded files access rights
+  #     - TZ=Europe/Paris # timezone
+  #     - OPENVPN_PROVIDER=PIA
+  #     - OPENVPN_CONFIG=Netherlands
+  #     - OPENVPN_USERNAME=p8732447
+  #     - OPENVPN_PASSWORD=beadleJ_19
+  #     - WEBPROXY_ENABLED=false
+  #     - DROP_DEFAULT_ROUTE=true
+  #     - LOCAL_NETWORK=192.168.0.68/16
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro # time
+  #     - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
+  #     - /media/Pi-Server/Plex/config/deluge:/config # config files
+
 
   # delugevpn:
   #   restart: unless-stopped
