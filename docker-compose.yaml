@@ -20,7 +20,8 @@ services:
     container_name: deluge
     # image: linuxserver/deluge:102
     # image: jordancrawford/rpi-deluge
-    image: sscraggles/docker-deluge-openvpn
+    # image: sscraggles/docker-deluge-openvpn
+    build: https://github.com/sscraggles/docker-deluge-openvpn.git
     network_mode: host # run on the host network directly, web UI on port 8112
     ports: 
       - "9091:9091"
