@@ -34,7 +34,7 @@ services:
       - OPENVPN_PASSWORD=beadleJ_19
       - WEBPROXY_ENABLED=false
       - DROP_DEFAULT_ROUTE=true
-      - LOCAL_NETWORK=192.168.0.0/16
+      - LOCAL_NETWORK=192.168.0.68/16
     volumes:
       - /etc/localtime:/etc/localtime:ro # time
       - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
