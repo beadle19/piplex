@@ -3,7 +3,7 @@ services:
 
   vpn:
     container_name: vpn
-    image: dperson/openvpn-client:latest
+    image: dperson/openvpn-client:armhf
     # image: kylemanna/openvpn
     # image: evolvedm/openvpn-rpi
     cap_add:
@@ -14,7 +14,7 @@ services:
       - /media/Pi-Server/Plex/vpn:/vpn # OpenVPN configuration
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
-    command: '-r 192.168.0.68/16' # route local network traffic
+    command: '-r 192.168.0.2/16' # route local network traffic
 
   deluge:
     container_name: deluge
