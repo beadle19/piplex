@@ -15,13 +15,12 @@ services:
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
     command: '-r 192.168.0.2/16' # route local network traffic
-    network_mode: "bridge"
 
   deluge:
     container_name: deluge
     # image: linuxserver/deluge:102
     image: jordancrawford/rpi-deluge
-    # network_mode: host # run on the host network directly, web UI on port 8112
+    network_mode: host # run on the host network directly, web UI on port 8112
     environment:
       - PUID=1000 # default user id, for downloaded files access rights
       - PGID=1000 # default group id, for downloaded files access rights
@@ -29,7 +28,6 @@ services:
     volumes:
       - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
       - /media/Pi-Server/Plex/config/deluge:/config # config files
-    network_mode: "bridge"
 
   # deluge:
   #   container_name: deluge
