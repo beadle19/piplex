@@ -11,7 +11,7 @@ services:
       - /media/Pi-Server/Plex/vpn:/vpn # OpenVPN configuration
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
-    command: '-r 192.168.1.0/16' # route local network traffic
+    command: '-r 192.168.0.176/16' # route local network traffic
 
   deluge:
       container_name: deluge
