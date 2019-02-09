@@ -1,12 +1,15 @@
-deluge:
-    container_name: deluge
-    # image: linuxserver/deluge:102
-    image: jordancrawford/rpi-deluge
-    network_mode: host # run on the host network directly, web UI on port 8112
-    environment:
-      - PUID=1000 # default user id, for downloaded files access rights
-      - PGID=1000 # default group id, for downloaded files access rights
-      - TZ=Europe/Paris # timezone
-    volumes:
-      - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
-      - /media/Pi-Server/Plex/config/deluge:/config # config files
+version: '3.4'
+services:
+
+  deluge:
+      container_name: deluge
+      # image: linuxserver/deluge:102
+      image: jordancrawford/rpi-deluge
+      network_mode: host # run on the host network directly, web UI on port 8112
+      environment:
+        - PUID=1000 # default user id, for downloaded files access rights
+        - PGID=1000 # default group id, for downloaded files access rights
+        - TZ=Europe/Paris # timezone
+      volumes:
+        - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
+        - /media/Pi-Server/Plex/config/deluge:/config # config files
