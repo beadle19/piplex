@@ -14,7 +14,7 @@ services:
       - ${HOME}/piplex/vpn:/vpn # OpenVPN configuration
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
-    command: '-r 192.168.0.1/16' # route local network traffic
+    command: '-r 192.168.0.1/24' # route local network traffic
 
   deluge:
       container_name: deluge
