@@ -9,7 +9,7 @@ services:
     command: 'cd / && sudo mkdir vpn'
     volumes:
       - /dev/net/tun:/dev/net/tun # tun device
-      - /media/Pi-Server/Plex/vpn:/vpn # OpenVPN configuration
+      - ${HOME}/piplex/vpn:/vpn # OpenVPN configuration
     ports:
       - 8112:8112 # port for deluge web UI to be reachable from local network
     command: '-r 192.168.0.176/16' # route local network traffic
@@ -24,5 +24,5 @@ services:
         - PGID=1000 # default group id, for downloaded files access rights
         - TZ=Europe/Paris # timezone
       volumes:
-        - /media/Pi-Server/Plex/downloads/ongoing:/downloads # download folder
-        - /media/Pi-Server/Plex/config/deluge:/config # config files
+        - ${HOME}/piplex/downloads/ongoing:/downloads # download folder
+        - ${HOME}/piplex/config/deluge:/config # config files
