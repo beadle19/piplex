@@ -1,5 +1,17 @@
 version: '3.4'
 services:
+  vpn:
+    container_name: vpn
+    image: dperson/openvpn-client:armhf
+    cap_add:
+      - net_admin # required to modify network interfaces
+    restart: unless-stopped
+    volumes:
+      - /dev/net/tun:/dev/net/tun # tun device
+      - /media/Pi-Server/Plex/vpn:/vpn # OpenVPN configuration
+    ports:
+      - 8112:8112 # port for deluge web UI to be reachable from local network
+    command: '-r 192.168.1.0/16' # route local network traffic
 
   deluge:
       container_name: deluge
